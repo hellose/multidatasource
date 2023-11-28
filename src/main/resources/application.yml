@@ -1,0 +1,52 @@
+server:
+  port: 8080
+
+database:
+  primary:
+    driver-class-name: org.postgresql.Driver
+    jdbc-url: jdbc:postgresql://localhost:5432/postgres?options=-c%20search_path=mybatis_spring_multi_datasource
+    username: postgres
+    password: 1234
+    poolName: primary-pool
+    maximum-pool-size: 5
+  secondary:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    jdbc-url: jdbc:mysql://localhost:3306/mybatis_spring_multi_datasource
+    username: root
+    password: 1234
+    poolName: secondary-pool
+    maximum-pool-size: 5
+
+mybatis:
+  type-aliases-package: study.spring.multidatasource
+  mapper-locations-primary: classpath:/study/spring/multidatasource/**/*Mapper.xml
+  mapper-locations-secondary: classpath:/study/spring/multidatasource/**/*MapperS.xml
+  configuration:
+    map-underscore-to-camel-case: true
+
+spring:
+  devtools:
+    livereload.enabled: true
+
+logging:
+  pattern:
+    console: "[%t] %-5level %logger{36} - %msg%n"
+  level:
+    study.spring.multidatasource: debug
+    org:
+      mybatis: trace
+      apache:
+        ibatis: trace
+      springframework:
+        transaction:
+          support: trace
+          interceptor: trace
+        jdbc:
+          support:
+            JdbcTransactionManager: trace
+          datasource:
+            DataSourceTransactionManager: trace
+    sun: info
+#    com:
+#      zaxxer:
+#        hikari: trace

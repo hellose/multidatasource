@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--
+CREATE TABLE sys_user(
+	id int not null primary key,
+	nickname char(50) default 'NOT_SET',
+	login_id char(50) not null,
+	login_password char(50) not null
+);
+ -->
+<mapper namespace="study.spring.multidatasource.user.UserMapper">
+
+	<select id="select" parameterType="java.lang.Long" resultType="userDto">
+		SELECT
+			id,
+			nickname,
+			login_id,
+			login_password
+		FROM
+			sys_user
+		WHERE
+			id = #{id}
+	</select>
+
+	<insert id="insert" parameterType="userDto">
+		<selectKey keyProperty="id" resultType="java.lang.Long" order="BEFORE">
+		SELECT
+			CASE WHEN
+				MAX(id) IS NULL THEN 1
+				ELSE MAX(id) + 1
+			END
+		FROM
+			sys_user
+		</selectKey>
+		INSERT INTO sys_user
+			(id, nickname, login_id, login_password)
+		VALUES
+			(#{id}, #{nickname}, #{loginId}, #{loginPassword})
+	</insert>
+
+	<update id="update">
+		UPDATE sys_user
+		SET
+			id = #{id},
+			nickname = #{nickname},
+			login_password = #{loginPassword}
+		WHERE
+			id = #{id}
+	</update>
+
+	<delete id="delete">
+		DELETE FROM sys_user
+		WHERE
+			id = #{id}
+	</delete>
+
+</mapper>

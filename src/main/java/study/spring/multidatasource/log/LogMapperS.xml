@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--
+CREATE TABLE sys_log(
+	id int auto_increment primary key,
+	log_text varchar,
+	insert_date timestamp default current_timestamp
+);
+ -->
+<mapper namespace="study.spring.multidatasource.log.LogMapper">
+
+	<insert id="insert" parameterType="logDto">
+		INSERT INTO sys_log
+			(log_text)
+		VALUES
+			(#{logText})
+	</insert>
+
+</mapper>
